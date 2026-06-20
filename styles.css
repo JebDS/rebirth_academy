@@ -1263,7 +1263,6 @@ h1 {
    추가 수정사항
    - 공지사항 안내 배지 40% 축소
    - SNS 보조 문구 크기 축소
-   - SNS 버튼 동양풍 호버 애니메이션 추가
 ============================================================ */
 
 /* 공지사항 팝업 상단 '환생교육원 안내' 크기 40% 축소 */
@@ -1287,80 +1286,110 @@ h1 {
   opacity: .86;
 }
 
-/* SNS 이미지 버튼: 동양풍 호버 애니메이션 */
-.sns-image-link {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  transition:
-    transform .32s ease,
-    box-shadow .32s ease,
-    filter .32s ease;
+/* ============================================================
+   추가 수정사항
+   - SNS 호버 빛 스윕 제거
+   - SNS 버튼 뒤 붉은색 일렁임 적용
+   - 노란 테두리 유지
+   - 글자 선택/스크랩 방지
+   - 모바일 공지사항 안내 배지 20% 축소
+============================================================ */
+
+/* 글자 선택 방지 */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.sns-image-link img {
-  border-radius: 10px;
-  transition:
-    transform .36s ease,
-    filter .36s ease;
+/* 이미지 드래그 방지 */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
-/* 빛이 붓질처럼 지나가는 효과 */
-.sns-image-link::after {
-  content: "";
-  position: absolute;
-  top: -40%;
-  left: -70%;
-  width: 42%;
-  height: 180%;
-  pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(254, 255, 47, .08) 35%,
-    rgba(239, 230, 206, .32) 50%,
-    rgba(254, 255, 47, .08) 65%,
-    transparent 100%
-  );
-  transform: rotate(12deg);
-  opacity: 0;
-}
-
-/* 기존 transform: none 설정을 덮어쓰기 */
+/* SNS 버튼 기존 호버 이동/확대/빛 스윕 제거 */
+.sns-image-link,
 .sns-image-link:hover,
 .sns-image-link:focus-visible {
-  transform: translateY(-5px);
-  outline: 1px solid rgba(254, 255, 47, .58);
+  position: relative;
+  overflow: visible;
+  z-index: 0;
+  transform: none;
+  filter: none;
+}
+
+.sns-image-link img,
+.sns-image-link:hover img,
+.sns-image-link:focus-visible img {
+  transform: none;
+  filter: none;
+}
+
+/* 기존 빛 스윕 효과 무력화 */
+.sns-image-link::after {
+  content: none;
+}
+
+/* SNS 버튼 뒤 붉은색 일렁임 */
+.sns-image-link::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 30% 35%, rgba(115, 15, 51, .48), transparent 42%),
+    radial-gradient(circle at 70% 65%, rgba(115, 15, 51, .34), transparent 46%),
+    radial-gradient(circle at 50% 50%, rgba(115, 15, 51, .22), transparent 62%);
+  opacity: .62;
+  filter: blur(16px);
+  animation: snsRedRipple 4.8s ease-in-out infinite;
+}
+
+/* 노란 테두리 유지 */
+.sns-image-link:hover,
+.sns-image-link:focus-visible {
+  outline: 2px solid rgba(254, 255, 47, .7);
   outline-offset: 7px;
   box-shadow:
     0 18px 42px rgba(0, 0, 0, .34),
-    0 0 26px rgba(254, 255, 47, .16);
-  filter: saturate(1.08);
+    0 0 22px rgba(115, 15, 51, .28);
 }
 
-.sns-image-link:hover img,
-.sns-image-link:focus-visible img {
-  transform: scale(1.025);
-  filter: contrast(1.04) brightness(1.05);
+.sns-image-link:hover::before,
+.sns-image-link:focus-visible::before {
+  opacity: .88;
+  filter: blur(18px);
 }
 
-.sns-image-link:hover::after,
-.sns-image-link:focus-visible::after {
-  animation: inkLightSweep .82s ease forwards;
-}
-
-@keyframes inkLightSweep {
+@keyframes snsRedRipple {
   0% {
-    left: -70%;
-    opacity: 0;
+    transform: scale(.96) rotate(0deg);
+    opacity: .48;
   }
 
-  20% {
-    opacity: 1;
+  45% {
+    transform: scale(1.05) rotate(1.5deg);
+    opacity: .78;
   }
 
   100% {
-    left: 130%;
-    opacity: 0;
+    transform: scale(.96) rotate(0deg);
+    opacity: .48;
+  }
+}
+
+/* 모바일: 공지사항 '환생교육원 안내' 배지 20% 축소 */
+@media (max-width: 640px) {
+  .modal-kicker,
+  .modal-badge,
+  .modal-label,
+  .notice-badge {
+    padding: 5px 10px;
+    font-size: clamp(.56rem, 1.44vw, .76rem);
+    line-height: 1.1;
   }
 }
