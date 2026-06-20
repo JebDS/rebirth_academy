@@ -1181,3 +1181,29 @@ h1 {
     line-height: 1.35;
   }
 }
+
+/* 모바일: footer 내부 스크롤 제거 및 전문 표시 */
+@media (max-width: 640px) {
+  .site-footer {
+    min-height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .footer-inner {
+    display: block;
+    min-height: auto;
+    padding: 14px 0 16px;
+  }
+
+  .footer-brand {
+    position: static;
+    width: auto;
+    transform: none;
+  }
+
+  .site-footer p {
+    margin-top: 0;
+    padding-top: 8px;
+  }
+}
