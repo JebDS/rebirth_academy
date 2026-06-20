@@ -15,6 +15,11 @@ const modalTitle = document.querySelector('#modalTitle');
 const modalBody = document.querySelector('#modalBody');
 const modalClose = document.querySelector('#modalClose');
 
+const MODAL_ANIMATION_TIME = 260;
+const PANEL_ANIMATION_TIME = 240;
+
+let modalCloseTimer = null;
+
 const formatTime = (seconds) => {
   if (!Number.isFinite(seconds)) return '00:00';
 
@@ -33,7 +38,6 @@ const updateBgmTime = () => {
 };
 
 bgm.addEventListener('loadedmetadata', updateBgmTime);
-
 bgm.addEventListener('timeupdate', updateBgmTime);
 
 bgm.addEventListener('ended', () => {
@@ -71,10 +75,12 @@ bgmSeek.addEventListener('input', () => {
 });
 
 readMoreBtn.addEventListener('click', () => {
-  const expanded = !promoText.classList.toggle('collapsed');
+  const willExpand = promoText.classList.contains('collapsed');
 
-  readMoreBtn.textContent = expanded ? '▲접기' : '▼펼쳐보기';
-  readMoreBtn.setAttribute('aria-expanded', String(expanded));
+  promoText.classList.toggle('collapsed', !willExpand);
+
+  readMoreBtn.textContent = willExpand ? '▲접기' : '▼펼쳐보기';
+  readMoreBtn.setAttribute('aria-expanded', String(willExpand));
 });
 
 tabButtons.forEach((button) => {
@@ -91,25 +97,56 @@ tabButtons.forEach((button) => {
     noticePanels.forEach((panel) => {
       const isActive = panel.id === `tab-${target}`;
 
-      panel.classList.toggle('active', isActive);
-      panel.hidden = !isActive;
+      if (isActive) {
+        panel.hidden = false;
+
+        requestAnimationFrame(() => {
+          panel.classList.add('active');
+        });
+      } else {
+        panel.classList.remove('active');
+
+        window.setTimeout(() => {
+          if (!panel.classList.contains('active')) {
+            panel.hidden = true;
+          }
+        }, PANEL_ANIMATION_TIME);
+      }
     });
   });
 });
 
 const openModal = (title, body) => {
+  clearTimeout(modalCloseTimer);
+
   modalTitle.textContent = title;
   modalBody.textContent = body;
+  modalClose.textContent = 'X';
 
   noticeModal.hidden = false;
-  document.body.style.overflow = 'hidden';
+  noticeModal.classList.remove('is-closing');
 
+  requestAnimationFrame(() => {
+    noticeModal.classList.add('is-open');
+  });
+
+  document.body.style.overflow = 'hidden';
   modalClose.focus();
 };
 
 const closeModal = () => {
-  noticeModal.hidden = true;
-  document.body.style.overflow = '';
+  if (noticeModal.hidden) return;
+
+  noticeModal.classList.remove('is-open');
+  noticeModal.classList.add('is-closing');
+
+  clearTimeout(modalCloseTimer);
+
+  modalCloseTimer = window.setTimeout(() => {
+    noticeModal.hidden = true;
+    noticeModal.classList.remove('is-closing');
+    document.body.style.overflow = '';
+  }, MODAL_ANIMATION_TIME);
 };
 
 noticeButtons.forEach((button) => {

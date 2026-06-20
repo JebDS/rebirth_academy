@@ -48,7 +48,7 @@
         <h2 id="recommend-title" class="section-title">추천 항목</h2>
 
         <div class="video-list" aria-label="추천 콘텐츠 목록">
-          <article class="media-row">
+          <a class="media-row" href="https://namu.wiki/w/1" target="_blank" rel="noopener noreferrer">
             <img src="assets/thumb-gonu.jpg" alt="환생 심사 전 준비 과정 안내 썸네일" />
             <div>
               <h3>환생 심사 전 준비 과정 안내</h3>
@@ -57,9 +57,9 @@
                 심사장 입장 전 확인해야 할 금지사항과 제출 서류를 함께 정리했습니다.
               </p>
             </div>
-          </article>
+          </a>
 
-          <article class="media-row">
+          <a class="media-row" href="https://namu.wiki/w/2" target="_blank" rel="noopener noreferrer">
             <img src="assets/thumb-logo.jpg" alt="환생교육원 입문 강의 썸네일" />
             <div>
               <h3>환생교육원 입문 강의</h3>
@@ -68,9 +68,9 @@
                 처음 방문한 대상자가 가장 먼저 읽어야 하는 안내문 형식으로 제작했습니다.
               </p>
             </div>
-          </article>
+          </a>
 
-          <article class="media-row">
+          <a class="media-row" href="https://namu.wiki/w/3" target="_blank" rel="noopener noreferrer">
             <img src="assets/thumb-notice.jpg" alt="공지·서약서 확인 절차 썸네일" />
             <div>
               <h3>공지·서약서 확인 절차</h3>
@@ -79,7 +79,7 @@
                 세부 내용은 하단 공지사항에서 확인할 수 있습니다.
               </p>
             </div>
-          </article>
+          </a>
         </div>
       </div>
     </section>
@@ -135,17 +135,23 @@
         <h2 id="notice-title" class="section-title">공지사항</h2>
 
         <div class="notice-tabs" role="tablist" aria-label="공지사항 탭">
-          <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-warning" data-tab="warning">[안내] 트리거 워닝</button>
-          <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-pledge" data-tab="pledge">커뮤서약서</button>
+          <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-warning" data-tab="warning">
+            [안내] 트리거 워닝
+          </button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-pledge" data-tab="pledge">
+            커뮤서약서
+          </button>
         </div>
 
         <div class="notice-panel active" id="tab-warning" role="tabpanel">
           <button type="button" class="notice-title-btn" data-title="기억 회수 장면 안내" data-body="심사 과정에서는 이전 생의 일부 기억을 확인하는 장면이 포함될 수 있습니다. 상실, 후회, 관계 단절과 관련된 표현이 등장할 수 있으므로 열람 전 본인의 상태를 확인해 주세요. 불편함이 발생하면 즉시 시청을 중단하고 안내원에게 상담실 이용을 요청할 수 있습니다.">
             기억 회수 장면 안내
           </button>
-          <button type="button" class="notice-title-btn" data-title="죽음·상실 묘사 안내" data-body="본 세계관에는 사망 경위, 장례, 이별, 미해결 감정에 대한 간접 묘사가 포함될 수 있습니다. 직접적인 충격 묘사는 최소화하였으나, 관련 주제에 민감한 대상자는 해당 구역을 건너뛰거나 동행자와 함께 확인하는 것을 권장합니다.">
-            죽음·상실 묘사 안내
+
+          <button type="button" class="notice-title-btn" data-title="죽음 상실 묘사 안내" data-body="본 세계관에는 사망 경위, 장례, 이별, 미해결 감정에 대한 간접 묘사가 포함될 수 있습니다. 직접적인 충격 묘사는 최소화하였으나, 관련 주제에 민감한 대상자는 해당 항목을 건너뛰거나 동행자와 함께 확인하는 것을 권장합니다.">
+            죽음 상실 묘사 안내
           </button>
+
           <button type="button" class="notice-title-btn" data-title="심사 보류 대상 안내" data-body="심사 보류 대상자는 일정 기간 동안 추가 상담과 기록 정리를 진행합니다. 보류는 탈락을 의미하지 않으며, 대상자가 자신의 선택을 재검토할 시간을 제공하기 위한 절차입니다. 세부 일정은 개별 안내문을 통해 별도 고지됩니다.">
             심사 보류 대상 안내
           </button>
@@ -155,13 +161,13 @@
           <button type="button" class="notice-title-btn" data-title="타인의 기록 비공개 서약" data-body="이용자는 커뮤니티 내부에서 확인한 타인의 기억, 심사 결과, 상담 내용, 식별번호를 외부에 공개하지 않습니다. 기록 공유가 필요한 경우 반드시 당사자의 동의를 받아야 하며, 무단 전재와 캡처 공유는 제한됩니다.">
             타인의 기록 비공개 서약
           </button>
+
           <button type="button" class="notice-title-btn" data-title="분쟁 발생 시 조정 절차 동의" data-body="커뮤니티 내 분쟁이 발생할 경우 이용자는 공개적인 비난보다 조정 절차를 우선합니다. 관리자의 사실 확인 요청에 협조하며, 임의 해석에 따른 확산을 삼갑니다. 조정 중인 사안은 결론 전까지 외부 공유를 제한합니다.">
             분쟁 발생 시 조정 절차 동의
           </button>
         </div>
       </div>
     </section>
-
     <section id="sns" class="page-section sns-section" aria-labelledby="sns-title">
       <div class="content-wrap">
         <h2 id="sns-title" class="section-title">SNS</h2>
@@ -190,7 +196,7 @@
 
   <div id="noticeModal" class="modal-overlay" hidden>
     <section class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button type="button" id="modalClose" class="modal-close" aria-label="팝업 닫기">×</button>
+      <button type="button" id="modalClose" class="modal-close" aria-label="팝업 닫기">X</button>
       <p class="modal-kicker">환생교육원 안내</p>
       <h3 id="modalTitle">공지 제목</h3>
       <p id="modalBody">공지 내용</p>
