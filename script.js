@@ -1,6 +1,7 @@
 const bgm = document.querySelector('#bgm');
 const bgmToggle = document.querySelector('#bgmToggle');
 const bgmSeek = document.querySelector('#bgmSeek');
+const bgmVolume = document.querySelector('#bgmVolume');
 const bgmTime = document.querySelector('#bgmTime');
 
 const readMoreBtn = document.querySelector('#readMoreBtn');
@@ -16,9 +17,10 @@ const modalBody = document.querySelector('#modalBody');
 const modalClose = document.querySelector('#modalClose');
 
 const MODAL_ANIMATION_TIME = 260;
-const PANEL_ANIMATION_TIME = 240;
+const COLLAPSE_ANIMATION_TIME = 460;
 
 let modalCloseTimer = null;
+let collapseTimer = null;
 
 const formatTime = (seconds) => {
   if (!Number.isFinite(seconds)) return '00:00';
@@ -36,6 +38,14 @@ const updateBgmTime = () => {
   bgmTime.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
   bgmSeek.value = duration ? String((current / duration) * 100) : '0';
 };
+
+if (bgmVolume) {
+  bgm.volume = Number(bgmVolume.value);
+
+  bgmVolume.addEventListener('input', () => {
+    bgm.volume = Number(bgmVolume.value);
+  });
+}
 
 bgm.addEventListener('loadedmetadata', updateBgmTime);
 bgm.addEventListener('timeupdate', updateBgmTime);
@@ -75,12 +85,30 @@ bgmSeek.addEventListener('input', () => {
 });
 
 readMoreBtn.addEventListener('click', () => {
-  const willExpand = promoText.classList.contains('collapsed');
+  clearTimeout(collapseTimer);
 
-  promoText.classList.toggle('collapsed', !willExpand);
+  const isCollapsed = promoText.classList.contains('collapsed');
 
-  readMoreBtn.textContent = willExpand ? '▲접기' : '▼펼쳐보기';
-  readMoreBtn.setAttribute('aria-expanded', String(willExpand));
+  if (isCollapsed) {
+    promoText.classList.remove('fade-ready');
+
+    requestAnimationFrame(() => {
+      promoText.classList.remove('collapsed');
+    });
+
+    readMoreBtn.textContent = '▲접기';
+    readMoreBtn.setAttribute('aria-expanded', 'true');
+  } else {
+    promoText.classList.remove('fade-ready');
+    promoText.classList.add('collapsed');
+
+    collapseTimer = window.setTimeout(() => {
+      promoText.classList.add('fade-ready');
+    }, COLLAPSE_ANIMATION_TIME);
+
+    readMoreBtn.textContent = '▼펼쳐보기';
+    readMoreBtn.setAttribute('aria-expanded', 'false');
+  }
 });
 
 tabButtons.forEach((button) => {
@@ -97,21 +125,8 @@ tabButtons.forEach((button) => {
     noticePanels.forEach((panel) => {
       const isActive = panel.id === `tab-${target}`;
 
-      if (isActive) {
-        panel.hidden = false;
-
-        requestAnimationFrame(() => {
-          panel.classList.add('active');
-        });
-      } else {
-        panel.classList.remove('active');
-
-        window.setTimeout(() => {
-          if (!panel.classList.contains('active')) {
-            panel.hidden = true;
-          }
-        }, PANEL_ANIMATION_TIME);
-      }
+      panel.classList.toggle('active', isActive);
+      panel.hidden = !isActive;
     });
   });
 });
