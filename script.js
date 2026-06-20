@@ -1,7 +1,7 @@
 const bgm = document.querySelector('#bgm');
 const bgmToggle = document.querySelector('#bgmToggle');
 const bgmSeek = document.querySelector('#bgmSeek');
-const bgmVolume = document.querySelector('#bgmVolume');
+const bgmVolumeBtn = document.querySelector('#bgmVolumeBtn');
 const bgmTime = document.querySelector('#bgmTime');
 
 const readMoreBtn = document.querySelector('#readMoreBtn');
@@ -39,11 +39,53 @@ const updateBgmTime = () => {
   bgmSeek.value = duration ? String((current / duration) * 100) : '0';
 };
 
-if (bgmVolume) {
-  bgm.volume = Number(bgmVolume.value);
+const volumeSteps = [
+  {
+    value: 0,
+    label: '음소거',
+    className: 'volume-muted',
+  },
+  {
+    value: 0.3,
+    label: '30%',
+    className: 'volume-30',
+  },
+  {
+    value: 0.5,
+    label: '50%',
+    className: 'volume-50',
+  },
+  {
+    value: 1,
+    label: '100%',
+    className: 'volume-100',
+  },
+];
 
-  bgmVolume.addEventListener('input', () => {
-    bgm.volume = Number(bgmVolume.value);
+let currentVolumeIndex = 2;
+
+const applyVolumeStep = () => {
+  if (!bgmVolumeBtn) return;
+
+  const currentStep = volumeSteps[currentVolumeIndex];
+
+  bgm.volume = currentStep.value;
+  bgm.muted = currentStep.value === 0;
+
+  bgmVolumeBtn.classList.remove('volume-muted', 'volume-30', 'volume-50', 'volume-100');
+  bgmVolumeBtn.classList.add(currentStep.className);
+
+  bgmVolumeBtn.dataset.volumeIndex = String(currentVolumeIndex);
+  bgmVolumeBtn.setAttribute('aria-label', `볼륨 ${currentStep.label}`);
+  bgmVolumeBtn.setAttribute('title', `볼륨 ${currentStep.label}`);
+};
+
+if (bgmVolumeBtn) {
+  applyVolumeStep();
+
+  bgmVolumeBtn.addEventListener('click', () => {
+    currentVolumeIndex = (currentVolumeIndex + 1) % volumeSteps.length;
+    applyVolumeStep();
   });
 }
 

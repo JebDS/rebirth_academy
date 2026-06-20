@@ -1543,3 +1543,203 @@ h1 {
     line-height: 1.35;
   }
 }
+
+/* ============================================================
+   추가 수정사항 3차 반영
+   - 로고 크기 30% 축소
+   - 볼륨바 제거 후 클릭형 볼륨 단계 버튼 적용
+   - 공지 팝업 안내 라운드 축소 및 중앙 정렬
+   - 학사일정 이미지 제거 보조
+   - PC 푸터 축소
+   - 모바일 전체 여백 증가
+============================================================ */
+
+/* 헤더·푸터의 전체 크기는 유지하고, 로고만 30% 축소 */
+.brand-logo {
+  width: calc(58px * 0.7) !important;
+  height: calc(58px * 0.7) !important;
+}
+
+.footer-brand img {
+  width: calc(44px * 0.7) !important;
+  height: calc(44px * 0.7) !important;
+}
+
+/* 기존 볼륨 range가 남아 있을 경우 표시 제거 */
+.bgm-volume {
+  display: none !important;
+}
+
+/* BGM 플레이어: 재생바 + 볼륨 단계 버튼 */
+.bgm-player {
+  grid-template-columns: 34px minmax(180px, 360px) 58px auto !important;
+  align-items: center;
+}
+
+/* 클릭형 볼륨 버튼 */
+.volume-step {
+  display: inline-flex;
+  align-items: end;
+  justify-content: center;
+  gap: 4px;
+  width: 58px;
+  height: 28px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.volume-step:focus-visible {
+  outline: 1px solid rgba(254, 255, 47, .75);
+  outline-offset: 4px;
+}
+
+/* 삼각형 볼륨 표시 */
+.volume-triangle {
+  display: block;
+  width: 0;
+  height: 0;
+  opacity: .22;
+  transition: opacity .22s ease, transform .22s ease, border-bottom-color .22s ease;
+}
+
+.volume-triangle-1 {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid #cbbf9f;
+}
+
+.volume-triangle-2 {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 16px solid #cbbf9f;
+}
+
+.volume-triangle-3 {
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 22px solid #cbbf9f;
+}
+
+.volume-step.volume-muted .volume-triangle {
+  opacity: .16;
+  border-bottom-color: #6f6656;
+}
+
+.volume-step.volume-30 .volume-triangle-1 {
+  opacity: 1;
+  border-bottom-color: var(--yellow);
+}
+
+.volume-step.volume-50 .volume-triangle-1,
+.volume-step.volume-50 .volume-triangle-2 {
+  opacity: 1;
+  border-bottom-color: var(--yellow);
+}
+
+.volume-step.volume-100 .volume-triangle {
+  opacity: 1;
+  border-bottom-color: var(--yellow);
+}
+
+.volume-step:hover .volume-triangle,
+.volume-step:focus-visible .volume-triangle {
+  transform: translateY(-2px);
+}
+
+/* 공지사항 팝업의 '안내' 표시 라운드 축소 및 완전 중앙 정렬 */
+.modal-badge,
+.modal-label,
+.notice-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 86px;
+  min-height: 34px;
+  padding: 0 14px !important;
+  border-radius: 10px !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+/* 팝업 박스도 기존보다 각진 형태로 조정 */
+.modal-box {
+  border-radius: 14px !important;
+}
+
+/* 학사일정 밑 이미지가 HTML에 남아 있어도 보이지 않게 처리 */
+#schedule .image-card,
+#schedule .schedule-image,
+#schedule .schedule-img,
+#schedule > .content-wrap > img {
+  display: none !important;
+}
+
+/* PC: 푸터 크기 30% 축소 */
+@media (min-width: 861px) {
+  .site-footer {
+    min-height: auto !important;
+  }
+
+  .footer-inner {
+    padding-top: calc(34px * 0.7) !important;
+    padding-bottom: calc(38px * 0.7) !important;
+  }
+
+  .footer-brand {
+    margin-bottom: calc(18px * 0.7) !important;
+  }
+
+  .site-footer p {
+    padding-top: calc(16px * 0.7) !important;
+    font-size: .82rem !important;
+    line-height: 1.45 !important;
+  }
+}
+
+/* 모바일: 모든 구역에 추천 항목보다 3% 더 넓은 좌우 여백 적용 */
+@media (max-width: 640px) {
+  .content-wrap,
+  .hero-inner,
+  .footer-inner {
+    width: 91% !important;
+    max-width: 91% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .video-list {
+    padding-inline: 0 !important;
+  }
+
+  .media-row,
+  .promo-block,
+  .notice-content-stage,
+  .sns-box,
+  .schedule-content,
+  .notice-tabs {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .bgm-player {
+    grid-template-columns: 28px 1fr 50px !important;
+    gap: 8px 8px !important;
+    width: 100% !important;
+  }
+
+  .bgm-seek {
+    grid-column: 2;
+  }
+
+  .volume-step {
+    grid-column: 3;
+    width: 50px;
+  }
+
+  .bgm-time {
+    grid-column: 2 / 4;
+  }
+}

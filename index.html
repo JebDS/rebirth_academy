@@ -49,16 +49,18 @@
             aria-label="배경음악 재생 위치"
           />
 
-          <input
-            type="range"
-            id="bgmVolume"
-            class="bgm-volume"
-            min="0"
-            max="1"
-            value="0.75"
-            step="0.01"
-            aria-label="배경음악 볼륨"
-          />
+          <button
+            type="button"
+            id="bgmVolumeBtn"
+            class="volume-step volume-50"
+            data-volume-index="2"
+            aria-label="볼륨 50%"
+            title="볼륨 50%"
+          >
+            <span class="volume-triangle volume-triangle-1"></span>
+            <span class="volume-triangle volume-triangle-2"></span>
+            <span class="volume-triangle volume-triangle-3"></span>
+          </button>
 
           <span id="bgmTime" class="bgm-time">00:00 / 00:00</span>
         </div>
@@ -147,7 +149,6 @@
         <p class="section-subtitle">환생 심사기간 일정을 확인하세요.</p>
         <figure class="image-card">
           <img src="assets/gonu.jpg" alt="고누놀이 이미지" />
-          <figcaption>심사기간 안내 이미지</figcaption>
         </figure>
       </div>
     </section>
