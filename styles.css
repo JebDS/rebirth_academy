@@ -43,7 +43,6 @@
   --yellow: #feff2f;
 
   --paper: #efe6ce;
-  --paper-dark: #d2bd91;
   --text: #eee6d6;
   --muted: #c6bca8;
 
@@ -51,11 +50,10 @@
   --modal-bg: rgba(0, 0, 0, .72);
 
   --shadow: 0 18px 44px rgba(0, 0, 0, .32);
-  --soft-shadow: 0 18px 42px rgba(0, 0, 0, .24);
 
-  --header-height-pc: 108px;
   --content-width: 1080px;
   --footer-width: 1240px;
+  --header-height-pc: 108px;
 }
 
 
@@ -80,6 +78,10 @@ body {
     linear-gradient(180deg, #0c0c0b 0%, var(--black) 35%, #111418 100%);
   font-family: 'KimJwaJinGeneral', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.72;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 body::before {
@@ -122,6 +124,8 @@ figure {
 
 img {
   max-width: 100%;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .content-wrap {
@@ -207,7 +211,7 @@ img {
 
 
 /* ============================================================
-   Sections
+   Section Common
 ============================================================ */
 
 .hero-section,
@@ -227,7 +231,6 @@ img {
 }
 
 .section-title {
-  position: relative;
   margin-bottom: clamp(28px, 5vw, 48px);
   text-align: center;
   font-family: 'Shilla', serif;
@@ -400,24 +403,94 @@ h1 {
 }
 
 
-/* Volume step button */
+/* ============================================================
+   Volume Button
+============================================================ */
 
 .bgm-volume {
   display: none;
 }
 
 .volume-step {
+  position: relative;
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   width: 58px;
   height: 28px;
   padding: 0;
   background: transparent;
   border: 0;
   cursor: pointer;
+  transform: none;
 }
+
+.volume-step:hover,
+.volume-step:focus-visible {
+  transform: none;
+}
+
+.volume-step:focus-visible {
+  outline: 1px solid rgba(254, 255, 47, .75);
+  outline-offset: 4px;
+}
+
+.volume-dot {
+  display: block;
+  border-radius: 50%;
+  background: #6f6656;
+  opacity: .45;
+  transition:
+    opacity .2s ease,
+    background-color .2s ease;
+}
+
+.volume-dot-1 {
+  width: 6px;
+  height: 6px;
+}
+
+.volume-dot-2 {
+  width: 10px;
+  height: 10px;
+}
+
+.volume-dot-3 {
+  width: 14px;
+  height: 14px;
+}
+
+.volume-step.volume-30 .volume-dot-1,
+.volume-step.volume-50 .volume-dot-1,
+.volume-step.volume-50 .volume-dot-2,
+.volume-step.volume-100 .volume-dot {
+  background: var(--yellow);
+  opacity: 1;
+}
+
+.volume-step.volume-muted .volume-dot {
+  background: #6f6656;
+  opacity: .35;
+}
+
+.volume-mute-line {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  width: 34px;
+  height: 2px;
+  opacity: 0;
+  background: var(--yellow);
+  pointer-events: none;
+  transform: translateY(-50%) rotate(-32deg);
+  transform-origin: center;
+}
+
+.volume-step.volume-muted .volume-mute-line {
+  opacity: 1;
+}
+
 
 /* ============================================================
    Section 1: Recommended Items
@@ -711,50 +784,53 @@ h1 {
   text-align: center;
 }
 
-.sns-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: min(760px, 72vw);
-  height: 1px;
-  opacity: .55;
-  background: linear-gradient(90deg, transparent, rgba(254, 255, 47, .22), transparent);
-  transform: translateX(-50%);
-}
-
 .sns-subtitle {
-  margin-bottom: 28px;
-  color: #efe6ce;
+  margin-top: -16px;
+  margin-bottom: 24px;
+  color: #d9cfb7;
   font-family: 'Shilla', serif;
-  font-size: clamp(1.55rem, 4.8vw, 3.15rem);
+  font-size: clamp(1rem, 2.8vw, 1.65rem);
   font-weight: 700;
   letter-spacing: -.03em;
+  opacity: .86;
 }
 
 .sns-image-link {
+  position: relative;
   display: inline-flex;
   width: min(360px, 74vw);
   aspect-ratio: 1 / 1;
   overflow: hidden;
+  border-radius: 10px;
   background: transparent;
-  box-shadow: var(--soft-shadow);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, .34),
+    0 0 1500px rgba(115, 15, 51, .30);
   transition:
-    outline-color .18s ease,
-    transform .18s ease;
+    box-shadow .24s ease,
+    outline-color .24s ease;
+}
+
+.sns-image-link::before,
+.sns-image-link::after {
+  content: none;
+  animation: none;
 }
 
 .sns-image-link:hover,
 .sns-image-link:focus-visible {
   outline: 2px solid rgba(254, 255, 47, .7);
-  outline-offset: 6px;
-  transform: translateY(-3px);
+  outline-offset: 7px;
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, .36),
+    0 0 1500px rgba(115, 15, 51, .35);
 }
 
 .sns-image-link img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 
@@ -882,7 +958,7 @@ h1 {
   border: 0;
   box-shadow: none;
   cursor: pointer;
-  font-size: 1.45rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 1;
   transition:
@@ -904,18 +980,19 @@ h1 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 86px;
-  min-height: 34px;
-  margin-bottom: 14px;
-  padding: 0 14px;
-  color: #171716;
+  min-width: 0;
+  min-height: 0;
+  margin: 0 auto 18px;
+  padding: 6px 13px;
+  color: var(--navy);
   background: var(--yellow);
-  border-radius: 10px;
-  line-height: 1;
+  border-radius: 4px;
   text-align: center;
   vertical-align: middle;
-  font-size: .8rem;
+  font-family: 'Shilla', serif;
+  font-size: clamp(.7rem, 1.8vw, .95rem);
   font-weight: 700;
+  line-height: 1.1;
 }
 
 .modal-box h3 {
@@ -983,8 +1060,8 @@ h1 {
   }
 
   .brand-logo {
-    width: 27px;
-    height: 27px;
+    width: 19px;
+    height: 19px;
   }
 
   .brand-title {
@@ -1062,6 +1139,15 @@ h1 {
     padding: 26px 22px 24px;
   }
 
+  .modal-kicker,
+  .modal-badge,
+  .modal-label,
+  .notice-badge {
+    padding: 7px 12px;
+    font-size: clamp(.68rem, 1.76vw, .92rem);
+    line-height: 1.1;
+  }
+
   .site-footer {
     max-height: 20vh;
     overflow-y: auto;
@@ -1093,303 +1179,5 @@ h1 {
     padding-top: 8px;
     font-size: .68rem;
     line-height: 1.35;
-  }
-}
-
-/* ============================================================
-   추가 수정사항
-   - 학사일정 이미지 표시 복구
-   - 볼륨 표시: 삼각형 → 원형 단계 표시
-   - 헤더 로고 30% 축소
-   - 볼륨/SNS 바운스 제거
-   - 공지사항 안내 배지 변경
-   - 공지사항 X 버튼 10% 축소
-   - SNS 이미지 라운드 추가
-============================================================ */
-
-/* 학사일정 이미지 표시 복구 */
-#schedule .image-card {
-  display: block;
-}
-
-#schedule .image-card img {
-  display: block;
-  width: 100%;
-  max-height: 800px;
-  object-fit: contain;
-}
-
-/* 헤더 로고 30% 축소 */
-.site-header .brand-logo {
-  width: 29px;
-  height: 29px;
-}
-
-/* 볼륨 버튼: 바운스 제거 */
-.volume-step,
-.volume-step:hover,
-.volume-step:focus-visible {
-  transform: none;
-}
-
-/* 볼륨 표시: 원형 단계 */
-.volume-step {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 58px;
-  height: 28px;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-}
-
-.volume-dot {
-  display: block;
-  border-radius: 50%;
-  background: #6f6656;
-  opacity: .45;
-  transition:
-    opacity .2s ease,
-    background-color .2s ease;
-}
-
-.volume-dot-1 {
-  width: 6px;
-  height: 6px;
-}
-
-.volume-dot-2 {
-  width: 10px;
-  height: 10px;
-}
-
-.volume-dot-3 {
-  width: 14px;
-  height: 14px;
-}
-
-.volume-step.volume-30 .volume-dot-1,
-.volume-step.volume-50 .volume-dot-1,
-.volume-step.volume-50 .volume-dot-2,
-.volume-step.volume-100 .volume-dot {
-  background: var(--yellow);
-  opacity: 1;
-}
-
-.volume-step.volume-muted .volume-dot {
-  background: #6f6656;
-  opacity: .35;
-}
-
-/* 음소거 상태의 사선 */
-.volume-mute-line {
-  position: absolute;
-  left: 13px;
-  top: 50%;
-  width: 34px;
-  height: 2px;
-  opacity: 0;
-  background: var(--yellow);
-  transform: translateY(-50%) rotate(-32deg);
-  transform-origin: center;
-  pointer-events: none;
-}
-
-.volume-step.volume-muted .volume-mute-line {
-  opacity: 1;
-}
-
-/* 볼륨 버튼 포커스만 유지 */
-.volume-step:focus-visible {
-  outline: 1px solid rgba(254, 255, 47, .75);
-  outline-offset: 4px;
-}
-
-/* 공지사항 팝업 안내 배지: 첨부 이미지 형태 */
-.modal-kicker,
-.modal-badge,
-.modal-label,
-.notice-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  min-height: 0;
-  margin: 0 auto 18px;
-  padding: 10px 22px;
-  color: #18374f;
-  background: var(--yellow);
-  border-radius: 4px;
-  text-align: center;
-  font-family: 'Shilla', serif;
-  font-size: clamp(1.15rem, 3vw, 1.55rem);
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-/* 공지사항 X 버튼 10% 축소 */
-.modal-close {
-  font-size: 1.3rem;
-}
-
-/* SNS 이미지 블록 바운스 제거 + 라운드 추가 */
-.sns-image-link,
-.sns-image-link:hover,
-.sns-image-link:focus-visible {
-  transform: none;
-}
-
-.sns-image-link {
-  border-radius: 10px;
-}
-
-.sns-image-link img {
-  border-radius: 10px;
-}
-
-/* 모바일 헤더 로고도 현재 기준 30% 축소 */
-@media (max-width: 640px) {
-  .site-header .brand-logo {
-    width: 19px;
-    height: 19px;
-  }
-}
-
-/* ============================================================
-   추가 수정사항
-   - 공지사항 안내 배지 40% 축소
-   - SNS 보조 문구 크기 축소
-============================================================ */
-
-/* 공지사항 팝업 상단 '환생교육원 안내' 크기 40% 축소 */
-.modal-kicker,
-.modal-badge,
-.modal-label,
-.notice-badge {
-  padding: 6px 13px;
-  border-radius: 4px;
-  font-size: clamp(.7rem, 1.8vw, .95rem);
-  line-height: 1.1;
-}
-
-/* SNS의 '블락/1차 확인'을 보조 문구처럼 축소 */
-.sns-subtitle {
-  margin-top: -16px;
-  margin-bottom: 24px;
-  color: #d9cfb7;
-  font-size: clamp(1rem, 2.8vw, 1.65rem);
-  font-weight: 700;
-  opacity: .86;
-}
-
-/* ============================================================
-   추가 수정사항
-   - SNS 호버 빛 스윕 제거
-   - SNS 버튼 뒤 붉은색 일렁임 적용
-   - 노란 테두리 유지
-   - 글자 선택/스크랩 방지
-   - 모바일 공지사항 안내 배지 20% 축소
-============================================================ */
-
-/* 글자 선택 방지 */
-body {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* 이미지 드래그 방지 */
-img {
-  -webkit-user-drag: none;
-  user-select: none;
-}
-
-/* SNS 버튼 기존 호버 이동/확대/빛 스윕 제거 */
-.sns-image-link,
-.sns-image-link:hover,
-.sns-image-link:focus-visible {
-  position: relative;
-  overflow: visible;
-  z-index: 0;
-  transform: none;
-  filter: none;
-}
-
-.sns-image-link img,
-.sns-image-link:hover img,
-.sns-image-link:focus-visible img {
-  transform: none;
-  filter: none;
-}
-
-/* 기존 빛 스윕 효과 무력화 */
-.sns-image-link::after {
-  content: none;
-}
-
-/* SNS 버튼 뒤 붉은색 일렁임 */
-.sns-image-link::before {
-  content: "";
-  position: absolute;
-  inset: -18px;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 18px;
-  background:
-    radial-gradient(circle at 30% 35%, rgba(115, 15, 51, .48), transparent 42%),
-    radial-gradient(circle at 70% 65%, rgba(115, 15, 51, .34), transparent 46%),
-    radial-gradient(circle at 50% 50%, rgba(115, 15, 51, .22), transparent 62%);
-  opacity: .62;
-  filter: blur(16px);
-  animation: snsRedRipple 4.8s ease-in-out infinite;
-}
-
-/* 노란 테두리 유지 */
-.sns-image-link:hover,
-.sns-image-link:focus-visible {
-  outline: 2px solid rgba(254, 255, 47, .7);
-  outline-offset: 7px;
-  box-shadow:
-    0 18px 42px rgba(0, 0, 0, .34),
-    0 0 22px rgba(115, 15, 51, .28);
-}
-
-.sns-image-link:hover::before,
-.sns-image-link:focus-visible::before {
-  opacity: .88;
-  filter: blur(18px);
-}
-
-@keyframes snsRedRipple {
-  0% {
-    transform: scale(.96) rotate(0deg);
-    opacity: .48;
-  }
-
-  45% {
-    transform: scale(1.05) rotate(1.5deg);
-    opacity: .78;
-  }
-
-  100% {
-    transform: scale(.96) rotate(0deg);
-    opacity: .48;
-  }
-}
-
-/* 모바일: 공지사항 '환생교육원 안내' 배지 20% 축소 */
-@media (max-width: 640px) {
-  .modal-kicker,
-  .modal-badge,
-  .modal-label,
-  .notice-badge {
-    padding: 5px 10px;
-    font-size: clamp(.56rem, 1.44vw, .76rem);
-    line-height: 1.1;
   }
 }
